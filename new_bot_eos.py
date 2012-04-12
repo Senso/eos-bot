@@ -55,6 +55,9 @@ class Web:
 	def authenticate(self):
 		ret = self.read_page(self.conf['urls']['login'] %(self.conf['username'], self.conf['password'], random.random()))
 		if ret == 'OK':
+			
+			# This is needed to validate login
+			d = self.read_page('http://www.ratjoy.com/eos/')
 			return True
 		else:
 			return False
