@@ -153,9 +153,9 @@ class Web:
 							self.stores[store_id][a.contents[0]['title'].strip()] = {}
 						else:
 							if a.contents[0]['title'] == 'Selling':
-								self.stores[store_id][a.contents[0]['title'].strip()]['units'] = a.contents[1].strip()
+								self.stores[store_id][a.contents[1].strip()]['units'] = a.contents[1].strip()
 							elif a.contents[0]['title'] == 'Average Sales Price':
-								self.stores[store_id][a.contents[0]['title'].strip()]['price'] = a.contents[1].strip()
+								self.stores[store_id][a.contents[1].strip()]['price'] = a.contents[1].strip()
 								
 					elif a.name == 'div':
 						self.parse_outofstock(div.__str__())
