@@ -81,9 +81,15 @@ class Web:
 		whid_s = re.search(whid_pat, source)
 		if whid_s:
 			whid = whid_s.group(1)
+		else:
+			print '\t\t\tCannot find whId.'
+			return
 		cost_s = re.search(cost_pat, source)
 		if cost_s:
 			cost = cost_s.group(1)
+		else:
+			print '\t\t\tCannot find cost.'
+			return
 		price_s = re.search(price_pat, source)
 		if price_s:
 			price = price_s.group(1)
@@ -92,7 +98,11 @@ class Web:
 				avg_price = float(price) * 1000.0
 			else:
 				avg_price = float(price.strip())
-				
+		else:
+			print '\t\t\tCannot find average price.'
+			return
+		
+		
 		print '\t\t\twhid:', whid
 		print '\t\t\tCost:', str(cost)
 		print '\t\t\tAvg price:', str(avg_price)
