@@ -162,5 +162,5 @@ if __name__ == '__main__':
 	config = load_config()
 	web = Web(config)
 	
-	for store in config['stores'].keys():
+	for store in config['stores']:
 		web.get_store_inventory(store)
