@@ -113,7 +113,7 @@ class Web:
 
 		print '\t\t\tCost:', str(cost)
 		print '\t\t\tAvg price:', str(avg_price)
-		print '\t\t\tWill sell at:', str(selling_price)
+		print '\t\t\tWill sell at:', '$' + str(round(selling_price / 100, 2))
 		
 		# DO IT
 		resp = self.read_page(self.conf['urls']['set_price'] % (selling_price, whid))
