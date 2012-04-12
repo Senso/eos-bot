@@ -14,6 +14,10 @@ from BeautifulSoup import BeautifulSoup
 
 CONFIG = 'config.txt'
 
+stores_sell_pat = re.compile('stores-sell-set-price\.php\?fsid=([0-9]+)\&amp\;sc_pid=([0-9]+)')
+import_cat_pat  = re.compile('/eos/market-import-cat\.php\?cat=([0-9]+)')
+buy_from_pat	= re.compile('mB\.buyFromMarket\(([0-9]+),[0-9]\)\;')
+
 def load_config():
 	# Load main config file
 	try:
@@ -25,6 +29,8 @@ def load_config():
 class Web:
 	def __init__(self, conf):
 		self.conf = conf
+		self.stores = {}
+		
 		self.cookie = cookielib.MozillaCookieJar()
 		self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookie))
 		self.load_cookie()
@@ -54,11 +60,102 @@ class Web:
 			return False
 		
 	def read_page(self, url):
-		time.sleep(0.5)
+		time.sleep(1.0)
 		r = self.opener.open(url)
 		return r.read()
+		
+	def has_no_listings(self, content):
+		if content.find('No listings found') > -1:
+			return True
+		return False
+	
+	def buy_product(self, prod_name, content):
+		print
+		soup = BeautifulSoup(content)
+		prod_name_pat = re.compile("title\=\"%s\"" % prod_name)
+		market_pat = re.compile("market_display_[0-9]+")
+		
+		for tr_tag in soup.findAll(id=market_pat):
+			raw_tr = tr_tag.__str__()
+			
+			# Check if the product is really found in that <TR>
+			search_prod = re.search(prod_name_pat, raw_tr)
+			if search_prod:
+				time.sleep(1.0)
+				print '\tFound', prod_name
+				derp = re.search(buy_from_pat, raw_tr)
+				
+				if derp:
+					market_prod_id = derp.group(1)
+					res = read_page(self.conf['urls']['buy_page'] % (market_prod_id, self.conf['buy_qty']))
+					print '\tPurchase Result:', res
+					return True
+				else:
+					print '\tFailed to find mB.buyFromMarket pattern'
+		return False
+		
+	def parse_outofstock(self, div):
+		stores_sell = re.search(stores_sell_pat, div)
+		if stores_sell:
+			fsid = stores_sell.group(1)
+			sc_pid = stores_sell.group(2)
+		import_cat = re.search(import_cat_pat, div)
+		if import_cat:
+			cat = import_cat.group(1)
 
+		for i in div.contents[0].contents:
+			if i.name == 'a':
+				if i['class'] == u'load_in_fbox':
+					prod_name = i.contents[0]['title'].replace(' - Product not found in warehouse.', '')
+					prod_name = prod_name.strip()
 
+		if prod_name and cat and fsid and sc_pid:
+			print prod_name, 'is Out of Stock.'
+
+			# 100 is probably overkill
+			page_num = 1
+			while page_num < 100:
+
+				print "\tSearching page %s of import category for %s" & (page_num, prod_name)
+				imp_page = self.read_page(self.conf['urls']['import_cat'] % (cat, page_num))
+				
+				if has_no_listings(imp_page):
+					print '\tNo more listings for', prod_name
+					break
+				
+				if self.buy_product(imp_page, prod_name):
+					break
+				else:
+					page_num += 1
+	
+	def get_store_inventory(self, store_id):
+		self.stores[store_id] = {}
+		
+		source = self.read_page(self.conf['urls']['store_inv'] % store_id)
+		
+		pos = source.find('<div class="prod_choices">')
+		if pos == -1:
+			print "Unable to parse store %s" % store_id
+			return False
+
+		soup = BeautifulSoup(source[pos:])
+		
+		# THIS whole thing is really ugly.
+		for div in soup.findAll('div'):
+			if div['class'] == 'prod_choices_item':
+				sub = div.contents[0].contents
+				for a in sub:
+					if a.name == 'a':
+						if a['class'] == u'load_in_fbox':
+							self.stores[store_id][a.contents[0]['title'].strip()] = {}
+						else:
+							if a.contents[0]['title'] == 'Selling':
+								self.stores[store_id][a.contents[0]['title'].strip()]['units'] = a.contents[1].strip()
+							elif a.contents[0]['title'] == 'Average Sales Price':
+								self.stores[store_id][a.contents[0]['title'].strip()]['price'] = a.contents[1].strip()
+								
+					elif a.name == 'div':
+						self.parse_outofstock(div.__str__())
 
 
 if __name__ == '__main__':
