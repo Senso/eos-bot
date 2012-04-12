@@ -1,0 +1,19 @@
+{
+	"username": "your EOS username",
+	"password": "Your EOS password",
+	
+	"buy_qty": 1,
+	
+	"stores": [
+		"store ID 1",
+		"store ID 2",
+		"etc."
+	],
+	
+	"urls": {
+		"login": "http://www.ratjoy.com/login.php?username=%s&password=%s&nocache=%s",
+		"store_inv": "http://www.ratjoy.com/eos/stores-sell.php?fsid=%s",
+		"import_cat": "http://www.ratjoy.com/eos/market-import-cat.php?cat=%s&page=%s",
+		"buy_page": "http://www.ratjoy.com/eos/market-import-buy.php?market_prod_id=%s&buy_num=%s"
+	}
+}
