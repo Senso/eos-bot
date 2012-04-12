@@ -53,7 +53,7 @@ class Web:
 				sys.exit(1)			
 		
 	def authenticate(self):
-		ret = read_page(conf['urls']['login'] %(conf['username'], conf['password'], random.random()))
+		ret = self.read_page(self.conf['urls']['login'] %(self.conf['username'], self.conf['password'], random.random()))
 		if ret == 'OK':
 			return True
 		else:
@@ -87,7 +87,7 @@ class Web:
 				
 				if derp:
 					market_prod_id = derp.group(1)
-					res = read_page(self.conf['urls']['buy_page'] % (market_prod_id, self.conf['buy_qty']))
+					res = self.read_page(self.conf['urls']['buy_page'] % (market_prod_id, self.conf['buy_qty']))
 					print '\tPurchase Result:', res
 					return True
 				else:
@@ -160,5 +160,7 @@ class Web:
 
 if __name__ == '__main__':
 	config = load_config()
-	web = Web()
+	web = Web(config)
 	
+	for store in config['stores'].keys():
+		web.get_store_inventory(store)
