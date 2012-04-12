@@ -10,15 +10,6 @@
 		"etc."
 	],
 	
-	"urls": {
-		"login": "http://www.ratjoy.com/login.php?username=%s&password=%s&nocache=%s",
-		"store_inv": "http://www.ratjoy.com/eos/stores-sell.php?fsid=%s",
-		"import_cat": "http://www.ratjoy.com/eos/market-import-cat.php?cat=%s&page=%s",
-		"buy_page": "http://www.ratjoy.com/eos/market-import-buy.php?market_prod_id=%s&buy_num=%s",
-		"get_price": "http://www.ratjoy.com/eos/stores-sell-set-price.php?fsid=%s&sc_pid=%s",
-		"set_price": "http://www.ratjoy.com/eos/stores-sell-set-price-start.php?sales_price=%s&ipid_wh_id=%s"
-	}
-	
 	"no_imports": [
 		"Banana Cream Pie",
 		"Blueberry Cheesecake",
@@ -48,4 +39,14 @@
 		"Pillow",
 		"Sheet"
 	]
+	
+	"urls": {
+		"login": "http://www.ratjoy.com/login.php?username=%s&password=%s&nocache=%s",
+		"store_inv": "http://www.ratjoy.com/eos/stores-sell.php?fsid=%s",
+		"import_cat": "http://www.ratjoy.com/eos/market-import-cat.php?cat=%s&page=%s",
+		"buy_page": "http://www.ratjoy.com/eos/market-import-buy.php?market_prod_id=%s&buy_num=%s",
+		"get_price": "http://www.ratjoy.com/eos/stores-sell-set-price.php?fsid=%s&sc_pid=%s",
+		"set_price": "http://www.ratjoy.com/eos/stores-sell-set-price-start.php?sales_price=%s&ipid_wh_id=%s"
+	}
+	
 }
