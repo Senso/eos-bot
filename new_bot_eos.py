@@ -77,7 +77,7 @@ class Web:
 		return False
 	
 	def set_price(self, fsid, sc_pid, prod_name):
-		source = self.read_page(self.conf['urls']['set_price'] % (fsid, sc_pid))
+		source = self.read_page(self.conf['urls']['get_price'] % (fsid, sc_pid))
 		whid_s = re.search(whid_pat, source)
 		if whid_s:
 			whid = whid_s.group(1)
@@ -116,6 +116,7 @@ class Web:
 		#print '\t\t\tAvg price:', str(avg_price)
 		
 		# DO IT
+		print self.conf['urls']['set_price'] % (selling_price, whid)
 		resp = self.read_page(self.conf['urls']['set_price'] % (selling_price, whid))
 		print 'Tried to set price, got:', resp
 		
