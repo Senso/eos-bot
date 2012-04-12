@@ -17,6 +17,7 @@ CONFIG = 'config.txt'
 stores_sell_pat = re.compile('stores-sell-set-price\.php\?fsid=([0-9]+)\&amp\;sc_pid=([0-9]+)')
 import_cat_pat  = re.compile('/eos/market-import-cat\.php\?cat=([0-9]+)')
 buy_from_pat	= re.compile('mB\.buyFromMarket\(([0-9]+),[0-9]\)\;')
+prod_name_pat   = re.compile('title=\"(.+?) \- Product not found in warehouse\."')
 
 def load_config():
 	# Load main config file
@@ -72,8 +73,7 @@ class Web:
 			return True
 		return False
 	
-	def buy_product(self, prod_name, content):
-		print
+	def buy_product(self, content, prod_name):
 		soup = BeautifulSoup(content)
 		prod_name_pat = re.compile("title\=\"%s\"" % prod_name)
 		market_pat = re.compile("market_display_[0-9]+")
@@ -85,45 +85,48 @@ class Web:
 			search_prod = re.search(prod_name_pat, raw_tr)
 			if search_prod:
 				time.sleep(1.0)
-				print '\tFound', prod_name
+				print '\t\tFound', prod_name
 				derp = re.search(buy_from_pat, raw_tr)
 				
 				if derp:
 					market_prod_id = derp.group(1)
 					res = self.read_page(self.conf['urls']['buy_page'] % (market_prod_id, self.conf['buy_qty']))
-					print '\tPurchase Result:', res
+					print '\t\tPurchase Result:', res
 					return True
 				else:
-					print '\tFailed to find mB.buyFromMarket pattern'
+					print '\t\tFailed to find mB.buyFromMarket pattern'
 		return False
 		
 	def parse_outofstock(self, div):
-		stores_sell = re.search(stores_sell_pat, div)
+		fsid = None
+		sc_pid = None
+		cat = None
+		prod_name = None
+		
+		raw_div = div.__str__()
+		stores_sell = re.search(stores_sell_pat, raw_div)
 		if stores_sell:
 			fsid = stores_sell.group(1)
 			sc_pid = stores_sell.group(2)
-		import_cat = re.search(import_cat_pat, div)
+		import_cat = re.search(import_cat_pat, raw_div)
 		if import_cat:
 			cat = import_cat.group(1)
-
-		for i in div.contents[0].contents:
-			if i.name == 'a':
-				if i['class'] == u'load_in_fbox':
-					prod_name = i.contents[0]['title'].replace(' - Product not found in warehouse.', '')
-					prod_name = prod_name.strip()
+		prod_name = re.search(prod_name_pat, raw_div)
+		if prod_name:
+			prod_name = prod_name.group(1).strip()
 
 		if prod_name and cat and fsid and sc_pid:
-			print prod_name, 'is Out of Stock.'
+			print '\t', prod_name, 'is Out of Stock.'
 
 			# 100 is probably overkill
 			page_num = 1
 			while page_num < 100:
 
-				print "\tSearching page %s of import category for %s" & (page_num, prod_name)
+				print "\t\tSearching page %s of import category for %s" % (page_num, prod_name)
 				imp_page = self.read_page(self.conf['urls']['import_cat'] % (cat, page_num))
 				
-				if has_no_listings(imp_page):
-					print '\tNo more listings for', prod_name
+				if self.has_no_listings(imp_page):
+					print '\t\tNo more listings for', prod_name
 					break
 				
 				if self.buy_product(imp_page, prod_name):
@@ -164,7 +167,7 @@ class Web:
 						continue
 					
 					if a.name == 'div':
-						self.parse_outofstock(div.__str__())
+						self.parse_outofstock(div)
 
 
 
@@ -174,4 +177,5 @@ if __name__ == '__main__':
 	web = Web(config)
 	
 	for store in config['stores']:
+		print 'Parsing store', store
 		web.get_store_inventory(store)
