@@ -47,7 +47,7 @@ class Web:
 
 		except:
 			if self.authenticate():
-				self.cookie.save(filename='cookies.txt')
+				self.cookie.save(filename='cookie.txt')
 			else:
 				print 'Login failed, exiting.'
 				sys.exit(1)			
