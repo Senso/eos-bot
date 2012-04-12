@@ -2,9 +2,9 @@
 
 This bot logs you in EoS, goes through all your stores and orders a set amount of units for each out of stock item, only from the Import Market. It then assigns a price and out them on sale.
 
-It's not an intelligent bot, it will set the price to aout 1% less than the average price (which can end up higher than average price because the game displays shortened average prices (ex. 15 k instead of 15,029)). If the cost is higher than the average price, it will put the price at 5% higher than cost.
+It's not an intelligent bot, it will set the price to about 1% less than the average world price (which can end up higher than average price because the game displays shortened average prices (ex. 15 k instead of 15,029)). If the cost is higher than the average price, it will put the price at 5% higher than cost.
 
-I have not tested it a lot but it works for me. So usual disclaimer, be careful, etc. Report to me all errors you can find.
+I have not tested it a lot but it works for me. So usual the disclaimer, be careful, etc. Report to me all errors you can find.
 
 If you have suggestions or if you know a way to improve the formulas, etc. Just let me know: I'm Senso on SA and IRC. 
 
