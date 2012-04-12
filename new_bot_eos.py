@@ -18,6 +18,9 @@ stores_sell_pat = re.compile('stores-sell-set-price\.php\?fsid=([0-9]+)\&amp\;sc
 import_cat_pat  = re.compile('/eos/market-import-cat\.php\?cat=([0-9]+)')
 buy_from_pat	= re.compile('mB\.buyFromMarket\(([0-9]+),[0-9]\)\;')
 prod_name_pat   = re.compile('title=\"(.+?) \- Product not found in warehouse\."')
+whid_pat		= re.compile('onblur=\"updateSprice\(([0-9]+)\)\;\"')
+cost_pat		= re.compile('\<a title=\"Cost\: \$(.+?)\"\>')
+price_pat		= re.compile('Average selling price \(World\)\:\<\/span\> $(.+?)\<br \/\>')
 
 def load_config():
 	# Load main config file
@@ -73,6 +76,30 @@ class Web:
 			return True
 		return False
 	
+	def set_price(self, fsid, sc_pid, prod_name):
+		source = self.read_page(self.conf['urls']['set_price'] % (fsid, sc_pid))
+		whid_s = re.search(whid_pat, source)
+		if whid_s:
+			whid = whid_s.group(1)
+		cost_s = re.search(cost_pat, source)
+		if cost_s:
+			cost = cost_s.group(1)
+		price_s = re.search(price_pat, source)
+		if price_s:
+			price = price_s.group(1)
+			if price[-1:] == 'k':
+				price = price.strip(' k')
+				avg_price = float(price) * 1000.0
+			else:
+				avg_price = float(price.strip())
+				
+		print '\t\t\twhid:', whid
+		print '\t\t\tCost:', str(cost)
+		print '\t\t\tAvg price:', str(avg_price)
+			
+
+		
+		
 	def buy_product(self, content, prod_name):
 		soup = BeautifulSoup(content)
 		prod_name_pat = re.compile("title\=\"%s\"" % prod_name)
@@ -130,6 +157,7 @@ class Web:
 					break
 				
 				if self.buy_product(imp_page, prod_name):
+					self.set_price(fsid, sc_pid, prod_name)
 					break
 				else:
 					page_num += 1
