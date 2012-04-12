@@ -102,7 +102,7 @@ class Web:
 			print '\t\t\tCannot find average price.'
 			return
 		
-		selling_price = avg_price - (avg_price * 0.01)
+		selling_price = avg_price - (avg_price * 0.015)
 		if selling_price > cost:
 			# Good bet, we should make at least a quick buck
 			selling_price = selling_price * 100.0

@@ -11,6 +11,7 @@
 	],
 	
 	"no_imports": [
+		"Apple Pie",
 		"Banana Cream Pie",
 		"Blueberry Cheesecake",
 		"Blueberry Muffin",
@@ -19,6 +20,7 @@
 		"Bread Roll",
 		"Buns",
 		"Cherry Cheesecake",
+		"Cappuccino",
 		"Chocolate Chip Cookies",
 		"Espresso",
 		"Ham Sandwich",
