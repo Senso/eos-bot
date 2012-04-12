@@ -40,7 +40,7 @@ class Web:
 		try:
 			self.cookie.load('cookie.txt')
 			if self.authenticate():
-				self.cookie.save(filename='cookies.txt')
+				self.cookie.save(filename='cookie.txt')
 			else:
 				self.cookie.clear()
 				raise
