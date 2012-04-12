@@ -145,11 +145,15 @@ class Web:
 		
 		# THIS whole thing is really ugly.
 		for div in soup.findAll('div'):
-			if div['class'] == 'prod_choices_item':
-				sub = div.contents[0].contents
-				for a in sub:
-					if a.name == 'div':
-						self.parse_outofstock(div.__str__())
+			try:
+				if div['class'] == 'prod_choices_item':
+					sub = div.contents[0].contents
+					for a in sub:
+						if a.name == 'div':
+							self.parse_outofstock(div.__str__())
+			except AttributeError:
+				# Most likely HTML we don't need
+				pass
 
 
 if __name__ == '__main__':
