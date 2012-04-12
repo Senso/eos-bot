@@ -14,6 +14,7 @@
 		"login": "http://www.ratjoy.com/login.php?username=%s&password=%s&nocache=%s",
 		"store_inv": "http://www.ratjoy.com/eos/stores-sell.php?fsid=%s",
 		"import_cat": "http://www.ratjoy.com/eos/market-import-cat.php?cat=%s&page=%s",
-		"buy_page": "http://www.ratjoy.com/eos/market-import-buy.php?market_prod_id=%s&buy_num=%s"
+		"buy_page": "http://www.ratjoy.com/eos/market-import-buy.php?market_prod_id=%s&buy_num=%s",
+		"set_price": "http://www.ratjoy.com/eos/stores-sell-set-price.php?fsid=%s&sc_pid=%s"
 	}
 }
