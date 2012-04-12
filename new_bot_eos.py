@@ -130,6 +130,9 @@ class Web:
 					break
 				else:
 					page_num += 1
+
+		else:
+			print 'Problem parsing Store page'
 	
 	def get_store_inventory(self, store_id):
 		self.stores[store_id] = {}
@@ -153,6 +156,9 @@ class Web:
 							self.parse_outofstock(div.__str__())
 			except AttributeError:
 				# Most likely HTML we don't need
+				pass
+			except KeyError:
+				# Found a <div> without a 'class'
 				pass
 
 
