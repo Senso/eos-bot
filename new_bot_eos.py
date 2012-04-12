@@ -20,7 +20,7 @@ buy_from_pat	= re.compile('mB\.buyFromMarket\(([0-9]+),[0-9]+\)\;')
 prod_name_pat   = re.compile('title=\"(.+?) \- Product not found in warehouse\."')
 whid_pat		= re.compile('onblur=\"updateSprice\(([0-9]+)\)\;\"')
 cost_pat		= re.compile('\<a title=\"Cost\: \$(.+?)\"\>')
-price_pat		= re.compile('Average selling price \(World\)\:\<\/span\> \$(.+)\<br \/\>')
+price_pat		= re.compile('Average selling price \(World\)\:\<\/span\> \$(.+?)\<br \/\>')
 
 def load_config():
 	# Load main config file
