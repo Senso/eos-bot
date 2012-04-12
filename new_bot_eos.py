@@ -111,14 +111,14 @@ class Web:
 			selling_price += selling_price * 0.05
 			selling_price = selling_price * 100.0
 
-		#print '\t\t\twhid:', whid
-		#print '\t\t\tCost:', str(cost)
-		#print '\t\t\tAvg price:', str(avg_price)
+		print '\t\t\tCost:', str(cost)
+		print '\t\t\tAvg price:', str(avg_price)
+		print '\t\t\tWill sell at:', str(selling_price)
 		
 		# DO IT
-		print self.conf['urls']['set_price'] % (selling_price, whid)
 		resp = self.read_page(self.conf['urls']['set_price'] % (selling_price, whid))
-		print 'Tried to set price, got:', resp
+		if resp != 'OK':
+			print '\t\t\tERROR while setting price:', resp
 		
 	def buy_product(self, content, prod_name):
 		soup = BeautifulSoup(content)
