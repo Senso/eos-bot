@@ -18,4 +18,34 @@
 		"get_price": "http://www.ratjoy.com/eos/stores-sell-set-price.php?fsid=%s&sc_pid=%s",
 		"set_price": "http://www.ratjoy.com/eos/stores-sell-set-price-start.php?sales_price=%s&ipid_wh_id=%s"
 	}
+	
+	"no_imports": [
+		"Banana Cream Pie",
+		"Blueberry Cheesecake",
+		"Blueberry Muffin",
+		"Blueberry Pie",
+		"Bread",
+		"Bread Roll",
+		"Buns",
+		"Cherry Cheesecake",
+		"Chocolate Chip Cookies",
+		"Espresso",
+		"Ham Sandwich",
+		"Hot Chocolate",
+		"Lemon Pie",
+		"Oatmeal Raisin Cookie",
+		"piña colada",
+		"Pumpkin Pie",
+		"Roast Beef Sandwich",
+		"Strawberry Banana Smoothie",
+		"Strawberry Pie",
+		"Tortilla",
+		"Fan",
+		"Blanket",
+		"Bonsai Plant",
+		"Comforter",
+		"Mattress",
+		"Pillow",
+		"Sheet"
+	]
 }

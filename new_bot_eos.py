@@ -167,6 +167,10 @@ class Web:
 			prod_name = prod_name.group(1).strip()
 
 		if prod_name and cat and fsid and sc_pid:
+			if prod_name in self.conf['no_imports']:
+				# Some products are never available as import.
+				return
+			
 			print '\t', prod_name, 'is Out of Stock.'
 
 			# 100 is probably overkill
