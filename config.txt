@@ -37,7 +37,7 @@
 		"Mattress",
 		"Pillow",
 		"Sheet"
-	]
+	],
 	
 	"urls": {
 		"login": "http://www.ratjoy.com/login.php?username=%s&password=%s&nocache=%s",
