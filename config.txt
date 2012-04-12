@@ -25,7 +25,6 @@
 		"Hot Chocolate",
 		"Lemon Pie",
 		"Oatmeal Raisin Cookie",
-		"piña colada",
 		"Pumpkin Pie",
 		"Roast Beef Sandwich",
 		"Strawberry Banana Smoothie",
