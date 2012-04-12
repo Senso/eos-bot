@@ -1,0 +1,27 @@
+== Blurb ==
+
+This bot logs you in EoS, goes through all your stores and orders a set amount of units for each out of stock item, only from the Import Market. It them assigns a price and out them on sale.
+
+It's not an intelligent bot, it will set the price to aout 1% less than the average price (which can end up higher than average price because the game displays shortened average prices (ex. 15 k instead of 15,029)). If the cost is higher than the average price, it will put the price at 5% higher than cost.
+
+I have not tested it a lot but it works for me. So usual disclaimer, be careful, etc. Report to me all errors you can find.
+
+If you have suggestions or if you know a way to improve the formulas, etc. Just let me know: I'm Senso on SA and IRC. 
+
+== Requirements ==
+- Python 2.6 or higher [http://python.org]
+- BeautifulSoup module for Python [http://www.crummy.com/software/BeautifulSoup/]
+
+== Making it work ==
+
+You need to edit config.txt. Put your account name and passwords in the required fields, that's easy.
+
+Other values you might want to change:
+- "stores": Has to be edited with your own store IDs.
+- "buy_qty": This is how many items will be bought every time. It defaults to 1 for safety, if you're rich you can set it higher.
+
+=== How to find my Store IDs ===
+- Go to http://www.ratjoy.com/eos/stores.php
+- Right-click on each store and choose "Copy link address" (or something similar).
+- Paste into notepad or whatever.
+- The store ID is the number after "fsid=".
