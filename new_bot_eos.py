@@ -16,11 +16,11 @@ CONFIG = 'config.txt'
 
 stores_sell_pat = re.compile('stores-sell-set-price\.php\?fsid=([0-9]+)\&amp\;sc_pid=([0-9]+)')
 import_cat_pat  = re.compile('/eos/market-import-cat\.php\?cat=([0-9]+)')
-buy_from_pat	= re.compile('mB\.buyFromMarket\(([0-9]+),[0-9]\)\;')
+buy_from_pat	= re.compile('mB\.buyFromMarket\(([0-9]+),[0-9]+\)\;')
 prod_name_pat   = re.compile('title=\"(.+?) \- Product not found in warehouse\."')
 whid_pat		= re.compile('onblur=\"updateSprice\(([0-9]+)\)\;\"')
 cost_pat		= re.compile('\<a title=\"Cost\: \$(.+?)\"\>')
-price_pat		= re.compile('Average selling price \(World\)\:\<\/span\> $(.+?)\<br \/\>')
+price_pat		= re.compile('Average selling price \(World\)\:\<\/span\> \$(.+)\<br \/\>')
 
 def load_config():
 	# Load main config file
@@ -123,6 +123,10 @@ class Web:
 			if search_prod:
 				time.sleep(1.0)
 				print '\t\tFound', prod_name
+				
+				# Fan is broken for some reason
+				if prod_name == 'Fan': continue
+				
 				derp = re.search(buy_from_pat, raw_tr)
 				
 				if derp:
