@@ -21,6 +21,7 @@ import_cat_pat  = re.compile('/eos/market-import-cat\.php\?cat=([0-9]+)')
 buy_from_pat	= re.compile('mB\.buyFromMarket\(([0-9]+),[0-9]+\)\;')
 prod_name_pat   = re.compile('title=\"(.+?) \- Product not found in warehouse\."')
 whid_pat		= re.compile('onblur=\"updateSprice\(([0-9]+)\)\;\"')
+buy_pat			= re.compile('([0-9]+) unit\(s\) of (.+?) bought for \$(.+?) total\.')
 cost_pat		= re.compile('\<a title=\"Cost\: \$(.+?)\"\>')
 price_pat		= re.compile('Average selling price \(World\)\:\<\/span\> \$(.+?)\<br \/\>')
 
@@ -163,8 +164,10 @@ class Web:
 				if derp:
 					market_prod_id = derp.group(1)
 					res = self.read_page(self.conf['urls']['buy_page'] % (market_prod_id, self.conf['buy_qty']))
-					print '\t\tPurchase Result:', res
-					return True
+					pres = re.search(buy_pat, res)
+					if pres:
+						print "Bought %s of %s at $%s" % (pres.group(1), pres.group(2), pres.group(3))
+						return True
 				else:
 					print '\t\tFailed to find mB.buyFromMarket pattern'
 		return False
