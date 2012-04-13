@@ -10,7 +10,6 @@ If you have suggestions or if you know a way to improve the formulas, etc. Just 
 
 == Requirements ==
 - Python 2.6 or higher [http://python.org]
-- BeautifulSoup module for Python [http://www.crummy.com/software/BeautifulSoup/]
 
 I have only tested it on Linux but in theory it should working the same way on MacOS and Windows.
 
