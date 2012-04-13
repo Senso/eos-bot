@@ -122,14 +122,17 @@ class Web:
 			print '\t\t\tCannot find average price.'
 			return
 		
-		selling_price = avg_price - (avg_price * 0.015)
-		if selling_price > cost:
+		#selling_price = avg_price - (avg_price * 0.015)
+		#if selling_price > cost:
 			# Good bet, we should make at least a quick buck
-			selling_price = selling_price * 100.0
-		else:
+		#	selling_price = selling_price * 100.0
+		#else:
 			# cost is higher than 1% off average price, try to sell at 5% markup
-			selling_price += cost * 0.05
-			selling_price = cost * 100.0
+		#	selling_price += cost * 0.05
+		#	selling_price = cost * 100.0
+		
+		# Blame Oblivion590 if that formula isn't right!
+		selling_price = cost * 2.0
 
 		print '\t\t\tCost:', str(cost)
 		print '\t\t\tAvg price:', str(avg_price)
