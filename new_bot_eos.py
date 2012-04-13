@@ -9,7 +9,7 @@ import urllib2
 import logging
 import httplib
 import cookielib
-from logging.handlers import FileHandler
+from logging import FileHandler
 
 # http://www.crummy.com/software/BeautifulSoup/
 from BeautifulSoup import BeautifulSoup
