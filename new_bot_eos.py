@@ -104,7 +104,7 @@ class Web:
 			return
 		cost_s = re.search(cost_pat, source)
 		if cost_s:
-			cost = cost_s.group(1)
+			cost = float(cost_s.group(1))
 		else:
 			print '\t\t\tCannot find cost.'
 			return
@@ -138,7 +138,7 @@ class Web:
 		if resp != 'OK':
 			print '\t\t\tERROR while setting price:', resp
 		else:
-			self.log.write("%s put on sale in store %s. Cost: %s, Avg Price: %s, Price: %s" %
+			self.log.write("%s added to store %s. Cost: $%s, Avg Price: $%s, Selling at: $%s" %
 						   (prod_name, fsid, cost, avg_price, round(selling_price / 100, 2)))
 		
 	def buy_product(self, content, prod_name):
