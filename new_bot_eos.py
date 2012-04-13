@@ -41,7 +41,7 @@ class Log:
 		self.logger = logging.getLogger()
 		self.logger.setLevel(logging.INFO)
 		fhandler = FileHandler(filename=fname)
-		formatter = logging.Formatter('%(asctime) %(message)s')
+		formatter = logging.Formatter('%(asctime)-15s %(message)s')
 		fhandler.setFormatter(formatter)
 		self.logger.addHandler(fhandler)
 
