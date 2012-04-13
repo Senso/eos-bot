@@ -132,7 +132,7 @@ class Web:
 		#	selling_price = cost * 100.0
 		
 		# Blame Oblivion590 if that formula isn't right!
-		selling_price = cost * 2.0
+		selling_price = (cost * 2.0) * 100.0
 
 		print '\t\t\tCost:', str(cost)
 		print '\t\t\tAvg price:', str(avg_price)
