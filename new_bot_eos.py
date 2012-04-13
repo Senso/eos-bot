@@ -105,7 +105,8 @@ class Web:
 			return
 		cost_s = re.search(cost_pat, source)
 		if cost_s:
-			cost = float(cost_s.group(1))
+			cost = cost_s.group(1).replace(',', '')
+			cost = float(cost)
 		else:
 			print '\t\t\tCannot find cost.'
 			return
