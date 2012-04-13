@@ -37,7 +37,8 @@ Other values you will need to change:
 == RUN IT ==
 On Linux: python new_bot_eos.py
 
-On Windows: Double-click on new_bot_eos.exe
+On Windows: Double-click on new_bot_eos.py or, if you don't have Python installed, try: new_bot_eos.exe
+I have just released the Windows "version" and it has not been fully tested so it possibly does not work.
 
 == Disclaimer ==
 
