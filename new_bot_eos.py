@@ -6,8 +6,10 @@ import time
 import random
 import urllib
 import urllib2
+import logging
 import httplib
 import cookielib
+from logging.handlers import FileHandler
 
 # http://www.crummy.com/software/BeautifulSoup/
 from BeautifulSoup import BeautifulSoup
@@ -29,10 +31,26 @@ def load_config():
 	except ValueError, e:
 		print "Error parsing configuration %s: " % CONFIG, e
 		sys.exit(1)
+		
+class Log:
+	def __init__(self, fname):
+		self.setup_logger(fname)
+
+	def setup_logger(self, fname):
+		self.logger = logging.getLogger()
+		self.logger.setLevel(logging.INFO)
+		fhandler = FileHandler(filename=fname)
+		formatter = logging.Formatter('%(message)s')
+		fhandler.setFormatter(formatter)
+		self.logger.addHandler(fhandler)
+
+	def write(self, msg):
+		self.logger.info(msg)
 	
 class Web:
-	def __init__(self, conf):
+	def __init__(self, conf, log):
 		self.conf = conf
+		self.log = log
 		self.stores = {}
 		
 		self.cookie = cookielib.MozillaCookieJar()
@@ -119,6 +137,9 @@ class Web:
 		resp = self.read_page(self.conf['urls']['set_price'] % (selling_price, whid))
 		if resp != 'OK':
 			print '\t\t\tERROR while setting price:', resp
+		else:
+			self.log.write("%s put on sale in store %s. Cost: %s, Avg Price: %s, Price: %s" %
+						   (prod_name, fsid, cost, avg_price, round(selling_price / 100, 2)))
 		
 	def buy_product(self, content, prod_name):
 		soup = BeautifulSoup(content)
@@ -230,7 +251,8 @@ class Web:
 
 if __name__ == '__main__':
 	config = load_config()
-	web = Web(config)
+	log = Log(config['logfile'])
+	web = Web(config, log)
 	
 	for store in config['stores']:
 		print 'Parsing store', store
