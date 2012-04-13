@@ -205,6 +205,10 @@ class Web:
 				print "\t\tSearching page %s of import category for %s" % (page_num, prod_name)
 				imp_page = self.read_page(self.conf['urls']['import_cat'] % (cat, page_num))
 				
+				if re.search('Market Closed', imp_page):
+					print 'Market is closed for the night, exiting.'
+					sys.exit(1)
+				
 				if self.has_no_listings(imp_page):
 					print '\t\tNo more listings for', prod_name
 					break
