@@ -41,7 +41,7 @@ class Log:
 		self.logger = logging.getLogger()
 		self.logger.setLevel(logging.INFO)
 		fhandler = FileHandler(filename=fname)
-		formatter = logging.Formatter('%(asctime)-15s %(message)s')
+		formatter = logging.Formatter('%(asctime) %(message)s')
 		fhandler.setFormatter(formatter)
 		self.logger.addHandler(fhandler)
 
@@ -139,7 +139,7 @@ class Web:
 		if resp != 'OK':
 			print '\t\t\tERROR while setting price:', resp
 		else:
-			self.log.write("%s added to store %s. Cost: $%s, Avg Price: $%s, Selling at: $%s" %
+			self.log.write(" %s added to store %s. Cost: $%s, Avg Price: $%s, Selling at: $%s" %
 						   (prod_name, fsid, cost, avg_price, round(selling_price / 100, 2)))
 		
 	def buy_product(self, content, prod_name):
