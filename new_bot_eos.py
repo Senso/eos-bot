@@ -128,8 +128,8 @@ class Web:
 			selling_price = selling_price * 100.0
 		else:
 			# cost is higher than 1% off average price, try to sell at 5% markup
-			selling_price += selling_price * 0.05
-			selling_price = selling_price * 100.0
+			selling_price += cost * 0.05
+			selling_price = cost * 100.0
 
 		print '\t\t\tCost:', str(cost)
 		print '\t\t\tAvg price:', str(avg_price)
