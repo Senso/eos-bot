@@ -76,7 +76,12 @@ class Web:
 				sys.exit(1)			
 		
 	def authenticate(self):
-		ret = self.read_page(self.conf['urls']['login'] %(self.conf['username'], self.conf['password'], random.random()))
+		data = (
+			('username', self.conf['username']),
+			('password', self.conf['password']),
+			('nocache', random.random())
+		)
+		ret = self.read_page(self.conf['urls']['login'], urllib.urlencode(data))
 		if ret == 'OK':
 			
 			# This is needed to validate login
@@ -85,9 +90,12 @@ class Web:
 		else:
 			return False
 		
-	def read_page(self, url):
+	def read_page(self, url, data=None):
 		time.sleep(1.0)
-		r = self.opener.open(url)
+		if data:
+			r = self.opener.open(url, data)
+		else:
+			r = self.opener.open(url)
 		return r.read()
 		
 	def has_no_listings(self, content):
