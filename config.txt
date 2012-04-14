@@ -1,7 +1,7 @@
 {
 	"username": "your EOS username",
 	"password": "Your EOS password",
-	
+
 	"buy_qty": 1,
 	
 	"stores": [
