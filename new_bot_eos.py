@@ -76,7 +76,12 @@ class Web:
 				sys.exit(1)			
 		
 	def authenticate(self):
-		ret = self.read_page(self.conf['urls']['login'] %(self.conf['username'], self.conf['password'], random.random()))
+		data = (
+			('username', self.conf['username']),
+			('password', self.conf['password']),
+			('nocache', random.random())
+		)
+		ret = self.read_page(self.conf['urls']['login'], urllib.urlencode(data))
 		if ret == 'OK':
 			
 			# This is needed to validate login
@@ -85,9 +90,12 @@ class Web:
 		else:
 			return False
 		
-	def read_page(self, url):
+	def read_page(self, url, data=None):
 		time.sleep(1.0)
-		r = self.opener.open(url)
+		if data:
+			r = self.opener.open(url, data)
+		else:
+			r = self.opener.open(url)
 		return r.read()
 		
 	def has_no_listings(self, content):
@@ -122,14 +130,17 @@ class Web:
 			print '\t\t\tCannot find average price.'
 			return
 		
-		selling_price = avg_price - (avg_price * 0.015)
-		if selling_price > cost:
+		#selling_price = avg_price - (avg_price * 0.015)
+		#if selling_price > cost:
 			# Good bet, we should make at least a quick buck
-			selling_price = selling_price * 100.0
-		else:
+		#	selling_price = selling_price * 100.0
+		#else:
 			# cost is higher than 1% off average price, try to sell at 5% markup
-			selling_price += cost * 0.05
-			selling_price = cost * 100.0
+		#	selling_price += cost * 0.05
+		#	selling_price = cost * 100.0
+		
+		# Blame Oblivion590 if that formula isn't right!
+		selling_price = (cost * 2.0) * 100.0
 
 		print '\t\t\tCost:', str(cost)
 		print '\t\t\tAvg price:', str(avg_price)
