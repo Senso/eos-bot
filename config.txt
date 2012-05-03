@@ -15,11 +15,14 @@
 	"no_imports": [
 		"Apple Pie",
 		"Banana Cream Pie",
+		"Banana Split",
+		"Beef Sausage",
 		"Blueberry Cheesecake",
 		"Blueberry Muffin",
 		"Blueberry Pie",
 		"Bread",
 		"Bread Roll",
+		"Buffalo Wings",
 		"Buns",
 		"Cappuccino",
 		"Cheeseburger",
@@ -37,10 +40,17 @@
 		"Hot Dog",
 		"Lemon Pie",
 		"Oatmeal Raisin Cookie",
+		"Pizza",
+		"Pot Roast",
 		"Pumpkin Pie",
 		"Roast Beef Sandwich",
+		"Roasted Pork Chop",
+		"Rotisserie Chicken",
+		"Steak Taco",
+		"Strawberry Banana Cake",
 		"Strawberry Banana Smoothie",
 		"Strawberry Pie",
+		"Tiramisu",
 		"Tortilla",
 		"Fan",
 		"Blanket",
@@ -48,7 +58,8 @@
 		"Comforter",
 		"Mattress",
 		"Pillow",
-		"Sheet"
+		"Sheet",
+		"Vanilla Cake"
 	],
 	
 	"urls": {
